@@ -1,11 +1,10 @@
 package com.system.rating.ratingApp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.bytebuddy.utility.dispatcher.JavaDispatcher;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="EMPLOYEES")
@@ -13,6 +12,7 @@ public class Employee {
 
     @Id
     @Column(name = "employee_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int employeeId;
 
     @Column(name="first_name")
@@ -33,10 +33,20 @@ public class Employee {
     @Column(name="userpassword")
     private String password;
 
+
+    @ManyToMany
+    @JoinTable(
+            name = "employee_jobs",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "job_id")
+    )
+    private List<Job> job;
+
+
     public Employee() {
     }
 
-    public Employee(int employeeId, String firstName, String lastName, String email, String phone, String username, String password) {
+    public Employee(int employeeId, String firstName, String lastName, String email, String phone, String username, String password, List<Job> job) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -44,6 +54,7 @@ public class Employee {
         this.phone = phone;
         this.username = username;
         this.password = password;
+        this.job = job;
     }
 
     public int getEmployeeId() {
@@ -100,6 +111,14 @@ public class Employee {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Job> getJob() {
+        return job;
+    }
+
+    public void setJob(List<Job> job) {
+        this.job = job;
     }
 
     @Override

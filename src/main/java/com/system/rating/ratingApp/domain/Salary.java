@@ -10,6 +10,7 @@ public class Salary {
 
     @Id //use for primary key
     @Column(name="salary_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int salaryId;
     @Column(name="salary")
     private int salary;
@@ -22,6 +23,12 @@ public class Salary {
     public Salary() {
     }
 
+    public Salary(int salaryId, int salary, Job job) {
+        this.salaryId = salaryId;
+        this.salary = salary;
+        this.job = job;
+    }
+
     public Job getJob() {
         return job;
     }
@@ -30,10 +37,10 @@ public class Salary {
         this.job = job;
     }
 
-    public Salary(int salaryId, int salary, Job job) {
+    public Salary(int salaryId, int salary) {
         this.salaryId = salaryId;
         this.salary = salary;
-        this.job = job;
+//        this.job = job;
     }
 
     public int getSalaryId() {
@@ -57,7 +64,7 @@ public class Salary {
         return "Salary{" +
                 "salaryId=" + salaryId +
                 ", salary=" + salary +
-                ", job=" + job +
+//                ", job=" + job +
                 '}';
     }
 }

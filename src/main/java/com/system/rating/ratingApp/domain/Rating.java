@@ -1,9 +1,9 @@
 package com.system.rating.ratingApp.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="RATINGS")
@@ -11,6 +11,7 @@ public class Rating {
 
     @Id
     @Column(name="rating_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ratingId;
 
     @Column(name="actual_rating")
@@ -19,14 +20,19 @@ public class Rating {
     @Column(name="comments")
     private String comments;
 
+    @ManyToMany(mappedBy = "ratings")
+    @JsonIgnore
+    private List<Job> jobs;
+
 
     public Rating() {
     }
 
-    public Rating(int ratingId, String actualRating, String comments) {
+    public Rating(int ratingId, String actualRating, String comments, List<Job> jobs) {
         this.ratingId = ratingId;
         this.actualRating = actualRating;
         this.comments = comments;
+        this.jobs = jobs;
     }
 
     public int getRatingId() {
@@ -51,6 +57,14 @@ public class Rating {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public List<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
     }
 
     @Override

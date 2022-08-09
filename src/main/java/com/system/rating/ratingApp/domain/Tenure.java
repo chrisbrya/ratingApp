@@ -11,6 +11,7 @@ public class Tenure {
 
     @Id
     @Column(name="tenure_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int tenureId;
     @Column(name="start_date")
     private Date startDate;
@@ -24,10 +25,11 @@ public class Tenure {
     public Tenure() {
     }
 
-    public Tenure(int tenureId, Date startDate, Date endDate) {
+    public Tenure(int tenureId, Date startDate, Date endDate, Job job) {
         this.tenureId = tenureId;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.job = job;
     }
 
     public int getTenureId() {
@@ -52,6 +54,14 @@ public class Tenure {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Job getJob() {
+        return job;
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
     }
 
     @Override

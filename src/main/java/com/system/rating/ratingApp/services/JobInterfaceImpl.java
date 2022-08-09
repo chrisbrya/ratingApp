@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JobInterfaceImpl implements JobInterface{
@@ -31,12 +32,13 @@ public class JobInterfaceImpl implements JobInterface{
     @Autowired
     private EmployeeRespository employeeRespository;
 
+    @Autowired
+    private SaveRatingRepository saveRatingRepository;
+
 
     @Override
     public List<Company> getAllCompanies() {
         return this.companyRepository.findAll();
-
-
     }
 
     @Override
@@ -55,9 +57,25 @@ public class JobInterfaceImpl implements JobInterface{
     }
 
     @Override
+    public void saveCompany(Company company) {
+        this.companyRepository.save(company);
+    }
+
+    @Override
     public void saveJob(Job job) {
         this.jobRepository.save(job);
     }
+
+    @Override
+    public void saveEmployee(Employee employee) {
+        this.employeeRespository.save(employee);
+    }
+
+    @Override
+    public void saveDepartment(Department department) { this.departmentRepository.save(department); }
+
+    @Override
+    public void saveRating(SaveRating saveRating) { this.saveRatingRepository.save(saveRating); }
 
     @Override
     public List<Tenure> getAllTenure() {
@@ -77,6 +95,16 @@ public class JobInterfaceImpl implements JobInterface{
     @Override
     public List<Employee> getAllEmployees() {
         return this.employeeRespository.findAll();
+    }
+
+    @Override
+    public List<Employee> findEmployeeByJob(Job job) {
+        return this.employeeRespository.findByJob(job);
+    }
+
+    @Override
+    public Optional<Job> findJobById(int jobId) {
+        return this.jobRepository.findById(jobId);
     }
 
 
